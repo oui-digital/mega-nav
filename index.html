@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega-Menu Demonstration | Multi-Column & Expanded Icons</title>
+  <link rel="stylesheet" href="mega-menu.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; min-height: 200vh; font-family: sans-serif; background-color: var(--mn-bg); color: var(--mn-text); overflow-x: hidden; }
+    html { overflow-x: hidden; }
+    
+    /* Demo Page specific aesthetics */
+    .demo-main {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .demo-hero {
+      margin-bottom: 4rem;
+    }
+
+    .demo-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .demo-hero p {
+      font-size: 1.125rem;
+      opacity: 0.8;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .demo-section-header {
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--mn-border);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1rem;
+    }
+
+    .icon-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      background: var(--mn-panel-bg);
+      border: 1px solid var(--mn-border);
+      border-radius: var(--mn-border-radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      text-align: center;
+      gap: 1rem;
+      transition: background-color var(--mn-transition), border-color var(--mn-transition);
+    }
+
+    .icon-card:hover {
+      background: var(--mn-hover-bg);
+      border-color: rgba(0,0,0,0.15);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .icon-card:hover { border-color: rgba(255,255,255,0.3); }
+    }
+
+    .icon-card .mega-icon {
+      width: 1.75em;
+      height: 1.75em;
+    }
+
+    .icon-card span {
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      opacity: 0.6;
+    }
+
+    /* Documentation Styles */
+    .doc-section {
+      margin-bottom: 5rem;
+    }
+    
+    .doc-block {
+      background: var(--mn-panel-bg);
+      border: 1px solid var(--mn-border);
+      padding: 2.5rem;
+      border-radius: var(--mn-border-radius);
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .doc-block h3 {
+      font-size: 1.25rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .doc-block p, .doc-block ul {
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.85;
+      margin-bottom: 1rem;
+    }
+
+    .doc-block ul {
+      padding-left: 1.5rem;
+    }
+
+    .doc-block li {
+      margin-bottom: 0.5rem;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--mn-hover-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    pre code {
+      display: block;
+      padding: 1.5rem;
+      overflow-x: auto;
+      background: #111;
+      color: #f8f8f8;
+      border-radius: var(--mn-border-radius);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-top: 1.5rem;
+      margin-bottom: 0;
+      border: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      pre code {
+        background: #000;
+        border: 1px solid var(--mn-border);
+      }
+    }
+  </style>
+</head>
+<body class="mega-nav-theme-showcase">
+
+  <!-- Header & Component Capabilities -->
+  <header style="border-bottom: 1px solid var(--mn-border); box-shadow: 0 4px 20px rgba(0,0,0,0.02);">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 1.5rem; position: relative;">
+      <a href="/" style="font-weight: 800; text-decoration: none; color: inherit; font-size: 1.25rem;">Brand.</a>
+
+      <!-- Mobile Toggle -->
+      <button class="mega-nav__mobile-toggle" aria-expanded="false" aria-controls="main-nav">
+        <svg class="mega-icon" aria-hidden="true"><use href="#icon-menu"></use></svg>
+        Menu
+      </button>
+
+      <!-- Main Navigation -->
+      <nav aria-label="Main Navigation" class="mega-nav" id="main-nav">
+        <!-- Mobile Header (Visible only on < 992px) -->
+        <div class="mega-nav__mobile-header">
+          <a href="/" class="mega-nav__mobile-logo">Brand.</a>
+          <button class="mega-nav__mobile-close" aria-label="Close menu" aria-controls="main-nav">
+            <svg class="mega-icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+          </button>
+        </div>
+
+        <ul class="mega-nav__list">
+          
+          <!-- Simple Non-Dropdown -->
+          <li class="mega-nav__item">
+            <div class="mega-nav__item-header">
+              <a href="/" class="mega-nav__link">
+                Home
+              </a>
+            </div>
+          </li>
+
+          <!-- CAPABILITY 1: 3-Column Dropdown with Categories and Promo Block -->
+          <li class="mega-nav__item mn-mega">
+            <div class="mega-nav__item-header">
+              <a href="/services" class="mega-nav__link" id="link-services">Services</a>
+              <button class="mega-nav__toggle" aria-expanded="false" aria-controls="panel-services" aria-labelledby="link-services">
+                <svg class="mega-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+              </button>
+            </div>
+            
+            <div class="mega-nav__panel mn-grid-3" id="panel-services">
+              <div class="mega-nav__panel-inner">
+                <div class="mega-nav__panel-grid">
+                  
+                  <!-- Category 1 -->
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">Professional</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-layout"></use></svg> Website Design</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-search"></use></svg> SEO Audits</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-bar-chart"></use></svg> Marketing Strategy</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- Category 2 -->
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">Trades</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-wrench"></use></svg> Plumbing</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-bolt"></use></svg> Electrical</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-paint-roller"></use></svg> Painting</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- Promo Block -->
+                  <div class="mega-nav__promo">
+                    <h4 class="mega-nav__promo-title">Need a quote?</h4>
+                    <p class="mega-nav__promo-text">Get an expert assessment for your project entirely for free.</p>
+                    <a href="/contact" class="mega-nav__promo-btn">
+                      Estimate <svg class="mega-icon" aria-hidden="true" style="margin-left:auto; width:1em; height: 1em;"><use href="#icon-arrow-right"></use></svg>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- CAPABILITY 2: 4-Column Mega Grid -->
+          <li class="mega-nav__item mn-mega">
+            <div class="mega-nav__item-header">
+              <a href="/industries" class="mega-nav__link" id="link-industries">Industries</a>
+              <button class="mega-nav__toggle" aria-expanded="false" aria-controls="panel-industries" aria-labelledby="link-industries">
+                <svg class="mega-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+              </button>
+            </div>
+            
+            <div class="mega-nav__panel mn-grid-4 mn-align-right" id="panel-industries">
+              <div class="mega-nav__panel-inner">
+                <div class="mega-nav__panel-grid">
+                  
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">Local Serve</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-house"></use></svg> Roofing</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-snowflake"></use></svg> HVAC</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-leaf"></use></svg> Landscaping</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">Wellness</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-cross"></use></svg> Medical</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-scissors"></use></svg> Beauty</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">Hospitality</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-coffee"></use></svg> Cafes</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-nav__category">
+                    <h3 class="mega-nav__category-title">B2B SaaS</h3>
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-shield"></use></svg> Security</a></li>
+                      <li><a href="#" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-building"></use></svg> Enterprise</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- CAPABILITY 3: Standard 2-Column Text List -->
+          <li class="mega-nav__item">
+            <div class="mega-nav__item-header">
+              <a href="/about" class="mega-nav__link" id="link-about">Company</a>
+              <button class="mega-nav__toggle" aria-expanded="false" aria-controls="panel-about" aria-labelledby="link-about">
+                <svg class="mega-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+              </button>
+            </div>
+            
+            <div class="mega-nav__panel mn-grid-2 mn-align-right" id="panel-about">
+              <div class="mega-nav__panel-inner">
+                <div class="mega-nav__panel-grid">
+                  
+                  <div class="mega-nav__category">
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="/about" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-building"></use></svg> About Us</a></li>
+                      <li><a href="/team" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-users"></use></svg> Our Team</a></li>
+                      <li><a href="/careers" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-briefcase"></use></svg> Careers</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-nav__category">
+                    <ul class="mega-nav__panel-list">
+                      <li><a href="/pricing" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-tag"></use></svg> Pricing</a></li>
+                      <li><a href="/reviews" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-star"></use></svg> Reviews</a></li>
+                      <li><a href="/blog" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-file-text"></use></svg> Articles</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- CAPABILITY 4: Simple Dropdown (1 Column) -->
+          <li class="mega-nav__item">
+            <div class="mega-nav__item-header">
+              <a href="/contact" class="mega-nav__link" id="link-contact">Contact</a>
+              <button class="mega-nav__toggle" aria-expanded="false" aria-controls="panel-contact" aria-labelledby="link-contact">
+                <svg class="mega-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+              </button>
+            </div>
+            
+            <div class="mega-nav__panel mn-align-right" id="panel-contact">
+              <div class="mega-nav__panel-inner">
+                 <ul class="mega-nav__panel-list">
+                    <li><a href="/contact" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-message"></use></svg> Message Us</a></li>
+                    <li><a href="/call" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-phone"></use></svg> Call Support</a></li>
+                    <li><a href="/locations" class="mega-nav__panel-link"><svg class="mega-icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg> Find a Location</a></li>
+                 </ul>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Content: Showcasing all the details -->
+  <main class="demo-main">
+    <div class="demo-hero">
+      <h1>Accessible Mega Menu</h1>
+      <p>
+        A premium, framework-agnostic mega-menu navigation component. It features multi-column grid layouts, a robust accessible disclosure pattern, automatic horizontal positioning safe-guards, and a built-in industry SVG library. Hover over the utilities in the top-navigation above to experience it.
+      </p>
+    </div>
+
+    <!-- Documentation Section -->
+    <section class="doc-section">
+      <h2 class="demo-section-header">Documentation & Integration</h2>
+      
+      <div class="doc-block">
+        <h3>1. Initial Setup</h3>
+        <p>To use this module in your project, copy the relevant CSS (or SCSS/LESS), the Vanilla JS file (<code>mega-menu.js</code>), and the hidden <code>&lt;svg&gt;</code> sprite block deeply embedded at the bottom of the HTML page. You must include the SVG block on every page where the mega menu runs, ideally placing it inside a layout file footer.</p>
+        <p>To prevent grid clipping, your header container must be bundled logically. Give your navigation wrapper <code>position: relative</code> to mathematically frame the mega-menus safely. Second, you must apply <code>overflow-x: hidden</code> strictly on your layout's <code>html</code> and <code>body</code> tags to block animation drift.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="no-js"&gt; &lt;!-- The JS automatically strips this class --&gt;
+&lt;body&gt;
+  &lt;header style="border-bottom: 1px solid var(--mn-border);"&gt;
+    &lt;!-- The relative wrapper acts as the boundary wall for massive menus --&gt;
+    &lt;div style="max-width: 1200px; margin: 0 auto; position: relative;"&gt;
+      &lt;a href="/"&gt;Brand.&lt;/a&gt;
+      &lt;nav aria-label="Main Navigation" class="mega-nav" id="main-nav"&gt;
+        &lt;!-- Menu Items --&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+  
+  &lt;!-- Paste the SVG System Sprite here --&gt;
+  &lt;svg style="display: none;" xmlns="http://www.w3.org/2000/svg"&gt;...&lt;/svg&gt;
+  
+  &lt;!-- Include the Navigation Controller --&gt;
+  &lt;script src="mega-menu.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+
+      <div class="doc-block">
+        <h3>2. Using the Icon System</h3>
+        <p>This layout aggressively avoids heavy <code>.woff2</code> font icons, exclusively utilizing a zero-byte inline stroke SVG system. The SVGs automatically assume the text color via <code>currentColor</code>.</p>
+        <p>To render an icon anywhere, assemble an empty SVG containing the <code>.mega-icon</code> utility class. Inside, point a <code>&lt;use&gt;</code> tag to the exact <code>ID</code> defined in your system sprite base (e.g. <code>#icon-house</code>, <code>#icon-briefcase</code>).</p>
+        <p><em>Check the Iconography reference below for a full visual library!</em></p>
+<pre><code>&lt;a href="/home" class="mega-nav__panel-link"&gt;
+  &lt;!-- aria-hidden="true" tells screen readers to correctly skip the decorative shapes --&gt;
+  &lt;svg class="mega-icon" aria-hidden="true"&gt;
+    &lt;use href="#icon-house"&gt;&lt;/use&gt;
+  &lt;/svg&gt; 
+  Roofing Services
+&lt;/a&gt;</code></pre>
+      </div>
+
+      <div class="doc-block">
+        <h3>3. Constructing Columns</h3>
+        <p>The core sub-menus operate via native progressive CSS Grids. You can split any panel perfectly by passing a layout class explicitly onto the <code>.mega-nav__panel</code> layer. Everything wraps dynamically.</p>
+        <ul>
+          <li><strong>2 Columns:</strong> Apply <code>class="mega-nav__panel mn-grid-2"</code></li>
+          <li><strong>3 Columns:</strong> Apply <code>class="mega-nav__panel mn-grid-3"</code></li>
+          <li><strong>4 Columns:</strong> Apply <code>class="mega-nav__panel mn-grid-4"</code></li>
+          <li><strong>Advanced Columns:</strong> Push an inline style tag directly like <code>style="--mn-cols: 5;"</code> on the panel layout object.</li>
+        </ul>
+        <p>Down inside the grid framework, isolate groupings of links inside <code>.mega-nav__category</code> wrappers. You can slap a <code>.mega-nav__category-title</code> over any of them to create a labeled column section.</p>
+<pre><code>&lt;div class="mega-nav__panel mn-grid-3" id="panel-services"&gt;
+  &lt;div class="mega-nav__panel-inner"&gt;
+    &lt;div class="mega-nav__panel-grid"&gt;
+      
+      &lt;!-- Column Category 1 --&gt;
+      &lt;div class="mega-nav__category"&gt;
+        &lt;h3 class="mega-nav__category-title"&gt;Trades&lt;/h3&gt;
+        &lt;ul class="mega-nav__panel-list"&gt;
+          &lt;li&gt;&lt;a href="#" class="mega-nav__panel-link"&gt;Plumbing&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="#" class="mega-nav__panel-link"&gt;Electrical&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      
+      &lt;!-- Column Category 2, etc... --&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="doc-block">
+        <h3>4. Mega Spread vs. Local Alignment</h3>
+        <p>The behavior of how panels unfurl relates strictly to how wide their grids are.</p>
+        <ul>
+          <li><strong>Massive Mega Menus (3 or 4 columns):</strong> Tag your <code>&lt;li&gt;</code> line item wrapper with the <code>.mn-mega</code> utility class. This logic forces the massive payload to snap natively to the parent <code>position: relative</code> header wall, calculating padding flawlessly so they never slice off the boundary constraints.</li>
+          <li><strong>Compact Local Dropdowns (1 or 2 columns):</strong> Exclude the <code>.mn-mega</code> tag. If the compact dropdown rests far to the right side of the screen, insert the <code>.mn-align-right</code> positional attribute alongside your grid definition instead. This traps it cleanly, forcing it to cascade downwards and leftwards back over the text safely.</li>
+        </ul>
+<pre><code>&lt;!-- Massive Centered Header-Spanning Layout --&gt;
+&lt;li class="mega-nav__item mn-mega"&gt;
+  ...
+  &lt;div class="mega-nav__panel mn-grid-4"&gt;...&lt;/div&gt;
+&lt;/li&gt;
+
+&lt;!-- Local Safely Right-Aligned Compact Popover --&gt;
+&lt;li class="mega-nav__item"&gt;
+  ...
+  &lt;div class="mega-nav__panel mn-grid-2 mn-align-right"&gt;...&lt;/div&gt;
+&lt;/li&gt;</code></pre>
+      </div>
+
+      <div class="doc-block">
+        <h3>5. Adding Featured "Promo" Blocks</h3>
+        <p>You can spotlight Call-to-Action conversion funnels alongside links instantly by loading the custom <code>.mega-nav__promo</code> node directly inside the grid tier. It utilizes distinct <code>-title</code>, <code>-text</code>, and <code>-btn</code> sub-components to create high urgency aesthetic contrasts universally.</p>
+<pre><code>&lt;div class="mega-nav__promo"&gt;
+  &lt;h4 class="mega-nav__promo-title"&gt;Need a quote?&lt;/h4&gt;
+  &lt;p class="mega-nav__promo-text"&gt;Get an expert assessment entirely for free.&lt;/p&gt;
+  &lt;a href="/contact" class="mega-nav__promo-btn"&gt;
+    Estimate
+    &lt;svg class="mega-icon" aria-hidden="true" style="margin-left:auto; width:1em; height:1em;"&gt;
+      &lt;use href="#icon-arrow-right"&gt;&lt;/use&gt;
+    &lt;/svg&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="doc-block">
+        <h3>6. Accessibility & The No-JS Fallback</h3>
+        <p>This widget acts firmly as a <strong>Disclosure Pattern</strong>. It aggressively bypasses faulty <code>role="menubar"</code> setups that cripple screen flow. Instead, accessibility devices tab across completely normal anchor objects, treating dropdown buttons contextually.</p>
+        <p>If JavaScript fails or is restricted locally, the menu falls backward onto a pure, CSS-driven cascading tree triggered via <code>:hover</code> and <code>:focus-within</code> listeners, provided the fundamental <code>.no-js</code> class exists on the foundational HTML shell element.</p>
+      </div>
+    </section>
+
+    <!-- UI Core -->
+    <section>
+      <h2 class="demo-section-header">Iconography System</h2>
+      <div class="icon-grid" style="margin-bottom: 4rem;">
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-menu"></use></svg><span>icon-menu</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-close"></use></svg><span>icon-close</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-arrow-down"></use></svg><span>icon-arrow-down</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-arrow-right"></use></svg><span>icon-arrow-right</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-external-link"></use></svg><span>icon-external-link</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-check"></use></svg><span>icon-check</span></div>
+      </div>
+    </section>
+
+    <!-- Marketing & Business Identity -->
+    <section>
+      <h2 class="demo-section-header">Identity & General</h2>
+      <div class="icon-grid" style="margin-bottom: 4rem;">
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-home"></use></svg><span>icon-home</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-user"></use></svg><span>icon-user</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-users"></use></svg><span>icon-users</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-briefcase"></use></svg><span>icon-briefcase</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-building"></use></svg><span>icon-building</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-star"></use></svg><span>icon-star</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-tag"></use></svg><span>icon-tag</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-image"></use></svg><span>icon-image</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-file-text"></use></svg><span>icon-file-text</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-search"></use></svg><span>icon-search</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-layout"></use></svg><span>icon-layout</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-bar-chart"></use></svg><span>icon-bar-chart</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-camera"></use></svg><span>icon-camera</span></div>
+      </div>
+    </section>
+
+    <!-- Communications -->
+    <section>
+      <h2 class="demo-section-header">Communication & Utilities</h2>
+      <div class="icon-grid" style="margin-bottom: 4rem;">
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-envelope"></use></svg><span>icon-envelope</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-phone"></use></svg><span>icon-phone</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-message"></use></svg><span>icon-message</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-map-pin"></use></svg><span>icon-map-pin</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-calendar"></use></svg><span>icon-calendar</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-clock"></use></svg><span>icon-clock</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-clipboard"></use></svg><span>icon-clipboard</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-help"></use></svg><span>icon-help</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-lifebuoy"></use></svg><span>icon-lifebuoy</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-gear"></use></svg><span>icon-gear</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-download"></use></svg><span>icon-download</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-upload"></use></svg><span>icon-upload</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-shield"></use></svg><span>icon-shield</span></div>
+      </div>
+    </section>
+
+    <!-- Industry Icons -->
+    <section>
+      <h2 class="demo-section-header">Trades & Wellness</h2>
+      <div class="icon-grid" style="margin-bottom: 4rem;">
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-wrench"></use></svg><span>icon-wrench</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-paint-roller"></use></svg><span>icon-paint-roller</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-bolt"></use></svg><span>icon-bolt</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-droplet"></use></svg><span>icon-droplet</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-snowflake"></use></svg><span>icon-snowflake</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-flame"></use></svg><span>icon-flame</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-house"></use></svg><span>icon-house</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-leaf"></use></svg><span>icon-leaf</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-cross"></use></svg><span>icon-cross</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-scissors"></use></svg><span>icon-scissors</span></div>
+        <div class="icon-card"><svg class="mega-icon"><use href="#icon-coffee"></use></svg><span>icon-coffee</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="mega-menu.js"></script>
+
+  <!-- Expanded SVG Icon System -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Core UI & Navigation -->
+      <symbol id="icon-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+      <symbol id="icon-arrow-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+      <symbol id="icon-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      
+      <!-- Company / Brand Base -->
+      <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 4-4h.34"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/></symbol>
+      <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+      <symbol id="icon-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22"/><line x1="9" y1="18" x2="9" y2="18"/><line x1="9" y1="14" x2="9" y2="14"/><line x1="9" y1="10" x2="9" y2="10"/><line x1="9" y1="6" x2="9" y2="6"/><line x1="15" y1="22" x2="15" y2="22"/><line x1="15" y1="18" x2="15" y2="18"/><line x1="15" y1="14" x2="15" y2="14"/><line x1="15" y1="10" x2="15" y2="10"/><line x1="15" y1="6" x2="15" y2="6"/></symbol>
+      
+      <!-- General Content / Marketing -->
+      <symbol id="icon-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+      <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+      <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+      <symbol id="icon-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+      <symbol id="icon-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+      <symbol id="icon-bar-chart" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></symbol>
+      <symbol id="icon-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+
+      <!-- Communication & Resources -->
+      <symbol id="icon-envelope" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="icon-map-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+      <symbol id="icon-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></symbol>
+      
+      <!-- Utility & Admin -->
+      <symbol id="icon-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+      <symbol id="icon-lifebuoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></symbol>
+      <symbol id="icon-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+      <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+
+      <!-- Trades & Special Services -->
+      <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+      <symbol id="icon-paint-roller" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6" rx="2" ry="2"/><path d="M12 9v11"/><path d="M7 16h10"/></symbol>
+      <symbol id="icon-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+      <symbol id="icon-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+      <symbol id="icon-snowflake" viewBox="0 0 24 24"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="M20 16l-4-4 4-4"/><path d="M4 8l4 4-4 4"/><path d="M16 4l-4 4-4-4"/><path d="M8 20l4-4 4 4"/></symbol>
+      <symbol id="icon-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+      <symbol id="icon-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+      
+      <!-- Food / Lifestyle / Wellness -->
+      <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1.5 2 2 4.5 2 9a10 10 0 0 1-10 10z"/><path d="M2 22l10-10"/></symbol>
+      <symbol id="icon-cross" viewBox="0 0 24 24"><path d="M10 2v8H2v4h8v8h4v-8h8v-4h-8V2h-4z"/></symbol>
+      <symbol id="icon-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="icon-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
+    </defs>
+  </svg>
+</body>
+</html>
